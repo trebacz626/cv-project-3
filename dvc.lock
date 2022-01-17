@@ -1,0 +1,30 @@
+schema: '2.0'
+stages:
+  train_yolact:
+    cmd: python src/models/yolact/custom_train.py --config=yolact_resnet50_config
+      --batch_size=3 --max_iter=100
+    deps:
+    - path: data/TrashCan/instances_train_trashcan.json
+      md5: 9961b3b9982d913319322ae85b1f4ae6
+      size: 22598259
+    - path: data/TrashCan/instances_val_trashcan.json
+      md5: 138136e0a1d118161983641bd2f3ba3c
+      size: 5862758
+    - path: data/TrashCan/train/
+      md5: a75f86cd5816b041b6343f9778f8239a.dir
+      size: 146143311
+      nfiles: 6065
+    - path: data/TrashCan/val/
+      md5: 470480a35554fe1fc9f03f71c307f02d.dir
+      size: 27222494
+      nfiles: 1147
+    - path: src/models/yolact/custom_train.py
+      md5: d1a1854d05047f2b8ff32deb891b5aa1
+      size: 16875
+    - path: src/models/yolact/data/config.py
+      md5: c87ffda8fc5e0bcbe0adf9e4702bee1f
+      size: 32242
+    outs:
+    - path: models/yolact/best_model.pth
+      md5: f5a77ec667ca067ce4428525c7e3007e
+      size: 123330173

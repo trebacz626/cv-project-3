@@ -1,0 +1,13 @@
+stages:
+  train_yolact:
+    cmd: python src/models/yolact/custom_train.py --config=yolact_resnet50_config
+      --batch_size=3 --max_iter=100
+    deps:
+    - data/TrashCan/instances_train_trashcan.json
+    - data/TrashCan/instances_val_trashcan.json
+    - data/TrashCan/train/
+    - data/TrashCan/val/
+    - src/models/yolact/custom_train.py
+    - src/models/yolact/data/config.py
+    outs:
+    - models/yolact/best_model.pth
