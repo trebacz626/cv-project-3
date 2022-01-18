@@ -194,7 +194,10 @@ trash_can = dataset_base.copy({
     'train_info':   'data/TrashCan/instances_train_trashcan.json',
 
     'valid_images': 'data/TrashCan/val',
-    'valid_info':   'data/TrashCan/instances_val_trashcan.json',
+    'valid_info':   'data/TrashCan/instances_val_trashcan_splt.json',
+
+    'test_images': 'data/TrashCan/val',
+    'test_info':   'data/TrashCan/instances_test_trashcan_splt.json',
 
     'has_gt': True,
     'class_names': ('rov', 'plant', 'animal_fish', 'animal_starfish', 'animal_shells', 'animal_crab', 'animal_eel', 'animal_etc', 'trash_clothing', 'trash_pipe', 'trash_bottle', 'trash_bag', 'trash_snack_wrapper', 'trash_can', 'trash_cup', 'trash_container', 'trash_unknown_instance', 'trash_branch', 'trash_wreckage', 'trash_tarp', 'trash_rope', 'trash_net')
@@ -691,7 +694,7 @@ yolact_base_config = coco_base_config.copy({
     
     # Training params
     'lr_steps': (280000, 600000, 700000, 750000),
-    'max_iter': 10000,#20000,#800000,
+    'max_iter': 20000,#800000,
     
     # Backbone Settings
     'backbone': resnet101_backbone.copy({

@@ -306,11 +306,11 @@ def prepare_data(datum, devices:list=None, allocation:list=None):
     with torch.no_grad():
         if devices is None:
             devices = ['cuda:0'] if args.cuda else ['cpu']
-        if allocation is None:
-            allocation = [args.batch_size // len(devices)] * (len(devices) - 1)
-            allocation.append(args.batch_size - sum(allocation)) # The rest might need more/less
-        
+
+
         images, (targets, masks, num_crowds) = datum
+
+        allocation = [min(args.batch_size,len(images))]
 
         cur_idx = 0
         for device, alloc in zip(devices, allocation):
