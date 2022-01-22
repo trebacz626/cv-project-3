@@ -113,10 +113,12 @@ def parse_args(argv=None):
                         help='When displaying / saving video, draw the FPS on the frame')
     parser.add_argument('--emulate_playback', default=False, dest='emulate_playback', action='store_true',
                         help='When saving a video, emulate the framerate that you\'d get running in real-time mode.')
+    parser.add_argument('--test', dest='display', action='store_true',
+                        help='do on test dataset')
 
     parser.set_defaults(no_bar=False, display=False, resume=False, output_coco_json=False, output_web_json=False, shuffle=False,
                         benchmark=False, no_sort=False, no_hash=False, mask_proto_debug=False, crop=True, detect=False, display_fps=False,
-                        emulate_playback=False)
+                        emulate_playback=False, test=False)
 
     global args
     args = parser.parse_args(argv)
@@ -1088,8 +1090,12 @@ if __name__ == '__main__':
             exit()
 
         if args.image is None and args.video is None and args.images is None:
-            dataset = COCODetection(cfg.dataset.valid_images, cfg.dataset.valid_info,
-                                    transform=BaseTransform(), has_gt=cfg.dataset.has_gt)
+            if not args.test:
+                dataset = COCODetection(cfg.dataset.valid_images, cfg.dataset.valid_info,
+                                        transform=BaseTransform(), has_gt=cfg.dataset.has_gt)
+            else:
+                dataset = COCODetection(cfg.dataset.test_images, cfg.dataset.test_info,
+                                        transform=BaseTransform(), has_gt=cfg.dataset.has_gt)
             prep_coco_cats()
         else:
             dataset = None        

@@ -203,7 +203,18 @@ trash_can = dataset_base.copy({
     'class_names': ('rov', 'plant', 'animal_fish', 'animal_starfish', 'animal_shells', 'animal_crab', 'animal_eel', 'animal_etc', 'trash_clothing', 'trash_pipe', 'trash_bottle', 'trash_bag', 'trash_snack_wrapper', 'trash_can', 'trash_cup', 'trash_container', 'trash_unknown_instance', 'trash_branch', 'trash_wreckage', 'trash_tarp', 'trash_rope', 'trash_net')
 })
 
+trash_can_overfit = dataset_base.copy({
+    'name': 'TrashCanOverfit',
 
+    'train_images': 'data/TrashCan/train',
+    'train_info':   'data/TrashCan/instances_overfit_trashcan.json',
+
+    'valid_images': 'data/TrashCan/train',
+    'valid_info':   'data/TrashCan/instances_overfit_trashcan.json',
+
+    'has_gt': True,
+    'class_names': ('rov', 'plant', 'animal_fish', 'animal_starfish', 'animal_shells', 'animal_crab', 'animal_eel', 'animal_etc', 'trash_clothing', 'trash_pipe', 'trash_bottle', 'trash_bag', 'trash_snack_wrapper', 'trash_can', 'trash_cup', 'trash_container', 'trash_unknown_instance', 'trash_branch', 'trash_wreckage', 'trash_tarp', 'trash_rope', 'trash_net')
+})
 
 # ----------------------- TRANSFORMS ----------------------- #
 
@@ -254,7 +265,7 @@ backbone_base = Config({
 
 resnet101_backbone = backbone_base.copy({
     'name': 'ResNet101',
-    'path': 'yolact_base_54_800000.pth',
+    'path': 'resnet101_reducedfc.pth',
     'type': ResNetBackbone,
     'args': ([3, 4, 23, 3],),
     'transform': resnet_transform,
@@ -777,6 +788,19 @@ yolact_resnet50_config = yolact_base_config.copy({
         'preapply_sqrt': False,
         'use_square_anchors': True, # This is for backward compatability with a bug
     }),
+})
+
+yolact_resnet50_config_overfit = yolact_resnet50_config.copy({
+    # Randomize hue, vibrance, etc.
+    'augment_photometric_distort': False,
+    # Have a chance to scale down the image and pad (to emulate smaller detections)
+    'augment_expand': False,
+    # Potentialy sample a random crop from the image and put it in a random place
+    'augment_random_sample_crop': False,
+    # Mirror the image with a probability of 1/2
+    'augment_random_mirror': False,
+    'max_iter': 8000,
+    'dataset': trash_can_overfit,
 })
 
 

@@ -19,12 +19,57 @@ stages:
       size: 27222494
       nfiles: 1147
     - path: src/models/yolact/custom_train.py
-      md5: 095fcb41c47df0aa72cafc3f1d336979
-      size: 16717
+      md5: 758f469579bb2ccbfd9845cb02aee5c0
+      size: 16828
     - path: src/models/yolact/data/config.py
-      md5: 0a23a16fa67ed216a603addd416f891e
-      size: 32351
+      md5: 59dc0d66771506b249770ee9b28a948d
+      size: 33551
     outs:
     - path: models/yolact/best_model.pth
       md5: 5a63eba8d58778f407922ecc6ae447cc
+      size: 123330173
+  train_yolact53:
+    cmd: python src/models/yolact/custom_train.py --config=yolact_darknet53_config
+      --batch_size=2 --best_model=best_model53.pth --max_iter=20000
+    deps:
+    - path: data/TrashCan/instances_train_trashcan.json
+      md5: 9961b3b9982d913319322ae85b1f4ae6
+      size: 22598259
+    - path: data/TrashCan/instances_val_trashcan_splt.json
+      md5: d0246f701303b104cb31ffbf2e09c2d6
+      size: 3937280
+    - path: src/models/yolact/custom_train.py
+      md5: 758f469579bb2ccbfd9845cb02aee5c0
+      size: 16828
+    - path: src/models/yolact/data/config.py
+      md5: 59dc0d66771506b249770ee9b28a948d
+      size: 33551
+    outs:
+    - path: models/yolact/best_model53.pth
+      md5: a19003ecf353b0c27d4ac509b8757cd7
+      size: 189736457
+  overfit_yolact:
+    cmd: python src/models/yolact/custom_train.py --config=yolact_resnet50_config_overfit
+      --batch_size=3 --best_model=best_model_overfit.pth
+    deps:
+    - path: data/TrashCan/instances_overfit_trashcan.json
+      md5: ba342879e77dcf85bd815387a61078c6
+      size: 409567
+    - path: data/TrashCan/train/
+      md5: a75f86cd5816b041b6343f9778f8239a.dir
+      size: 146143311
+      nfiles: 6065
+    - path: data/TrashCan/val/
+      md5: 470480a35554fe1fc9f03f71c307f02d.dir
+      size: 27222494
+      nfiles: 1147
+    - path: src/models/yolact/custom_train.py
+      md5: 758f469579bb2ccbfd9845cb02aee5c0
+      size: 16828
+    - path: src/models/yolact/data/config.py
+      md5: 59dc0d66771506b249770ee9b28a948d
+      size: 33551
+    outs:
+    - path: models/yolact/best_model_overfit.pth
+      md5: ab47e9ee4dd608235f6c463b619a08a4
       size: 123330173

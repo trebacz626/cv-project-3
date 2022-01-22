@@ -1,0 +1,4 @@
+outs:
+- md5: 8a9706b73d5c6a450d8ab51079f0d886
+  size: 162536696
+  path: darknet53.pth

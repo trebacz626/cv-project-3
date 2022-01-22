@@ -1,5 +1,8 @@
+torch
 fastapi
 uvicorn
 opencv-python
 pandas
 wandb
+python-multipart
+tensorboard

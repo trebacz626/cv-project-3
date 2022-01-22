@@ -1,2 +1,5 @@
 /resnet50-19c8e357.pth
 /best_model.pth
+/best_model53.pth
+/best_model_overfit.pth
+/darknet53.pth

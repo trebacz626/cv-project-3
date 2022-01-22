@@ -30,17 +30,17 @@ def predImage(net, image):
 
 def getModel(trained_model_path = "models/yolact/best_model.pth", config_path = "yolact_resnet50_config"):
     with torch.no_grad():
-        model_path = SavePath.from_str(trained_model_path)
         set_cfg(config_path)
         cudnn.fastest = True
         torch.set_default_tensor_type('torch.cuda.FloatTensor')
         net = Yolact()
-        net.load_weights(model_path)
+        net.load_weights(trained_model_path)
         net.eval()
         net =net.cuda()
         net.detect.use_fast_nms = True
         net.detect.use_cross_class_nms = False
         cfg.mask_proto_debug = False
+        return net
 
 
     # evalimage("weights/yolact_resnet50_26_53333.pth", cv2.imread("../../../data/TrashCan/train/vid_000003_frame0000011.jpg"))

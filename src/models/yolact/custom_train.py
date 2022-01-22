@@ -75,6 +75,8 @@ parser.add_argument('--optimizer', dest='optimizer', default="sgd", type=str,
                     help='Optimizer sgd or adam')
 parser.add_argument('--max_iter', default=None, type=int,
                     help='max iterations')
+parser.add_argument('--best_model', default="best_model.pth", type=str,
+                    help='best model name')
 
 parser.set_defaults(keep_latest=False, log=True, log_gpu=False, interrupt=True, autoscale=True)
 args = parser.parse_args()
@@ -180,6 +182,7 @@ def train():
         net = net.cuda()
     
     # Initialize everything
+    #TODO try freeze 1,3
     yolact_net.freeze_bn() # Freeze bn so we don't kill our means
     yolact_net(torch.zeros(1, 3, cfg.max_size, cfg.max_size).cuda())
     yolact_net.freeze_bn(True)
@@ -403,7 +406,7 @@ def compute_validation_map(epoch, iteration, yolact_net, dataset):
         cur_map_avg = (val_info["box"]['all'] + val_info["mask"]['all'])/2
         global best_map_avg
         if cur_map_avg > best_map_avg:
-            yolact_net.save_weights(args.save_folder+"best_model.pth")
+            yolact_net.save_weights(args.save_folder+args.best_model)
             best_map_avg = cur_map_avg
 
 

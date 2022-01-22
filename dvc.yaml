@@ -11,3 +11,24 @@ stages:
     - src/models/yolact/data/config.py
     outs:
     - models/yolact/best_model.pth
+  overfit_yolact:
+    cmd: python src/models/yolact/custom_train.py --config=yolact_resnet50_config_overfit --batch_size=3 --best_model=best_model_overfit.pth
+    deps:
+      - data/TrashCan/instances_overfit_trashcan.json
+      - data/TrashCan/train/
+      - data/TrashCan/val/
+      - src/models/yolact/custom_train.py
+      - src/models/yolact/data/config.py
+    outs:
+      - models/yolact/best_model_overfit.pth
+  train_yolact53:
+    cmd: python src/models/yolact/custom_train.py --config=yolact_darknet53_config --batch_size=2 --best_model=best_model53.pth --max_iter=20000
+    deps:
+      - data/TrashCan/instances_train_trashcan.json
+      - data/TrashCan/instances_val_trashcan_splt.json
+#      - data/TrashCan/train/ we do not dd them because above files will have to change also and we will ise less computation
+#      - data/TrashCan/val/
+      - src/models/yolact/custom_train.py
+      - src/models/yolact/data/config.py
+    outs:
+      - models/yolact/best_model53.pth
