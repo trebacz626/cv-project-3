@@ -1,4 +1,6 @@
-# cv-project-3
+## Documentation
+
+## Yolact
 
 First please run:
 
@@ -6,7 +8,6 @@ pip install -r requirements.txt
 
 
 
-## Yolact
 ### Eval
 If you want to run our models please type:
 
@@ -38,3 +39,20 @@ docker run -p 8000:8000 yoloapi:1
 And test with:
 
 python src/api/test_script.py
+
+
+###Mask-RCNN
+####Resnet backbone:
+
+Go to notebooks/mask-rcnn-4-resnet.ipynb <br>
+Training: Specify for how many epoch you want to train the network in the main function, then run all cells
+<br> If it comes to detection, follow the scheme in the last cell.
+
+
+####Mobilenetv2 backbone:
+
+Training: Go to notebooks/mask-rcnn-4-resnet.ipynb <br>
+Specify for how many epoch you want to train the network in the main function, then run all cells
+<br> If it comes to detection, follow the scheme in the last cell.
+
+
