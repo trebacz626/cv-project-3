@@ -14,12 +14,15 @@ import torch
 import torch.backends.cudnn as cudnn
 import cv2
 
-
+CUDA = False
 
 def predImage(net, image):
 
-    frame = torch.from_numpy(image).cuda().float()
-    batch = FastBaseTransform()(frame.unsqueeze(0))
+    if CUDA:
+        frame = torch.from_numpy(image).cuda().float()
+    else:
+        frame = torch.from_numpy(image).float()
+    batch = FastBaseTransform(CUDA)(frame.unsqueeze(0))
     preds = net(batch)
     pred = preds[0]
     del pred['net'],
@@ -30,13 +33,23 @@ def predImage(net, image):
 
 def getModel(trained_model_path = "models/yolact/best_model.pth", config_path = "yolact_resnet50_config"):
     with torch.no_grad():
+        print("setting config")
         set_cfg(config_path)
-        cudnn.fastest = True
-        torch.set_default_tensor_type('torch.cuda.FloatTensor')
+        print("setting tensor")
+        if CUDA:
+            cudnn.fastest = True
+            torch.set_default_tensor_type('torch.cuda.FloatTensor')
+        else:
+            torch.set_default_tensor_type('torch.FloatTensor')
+        print("creating network")
         net = Yolact()
-        net.load_weights(trained_model_path)
+        print("loading weghts")
+        net.load_weights(trained_model_path, CUDA)
+        print("eval")
         net.eval()
-        net =net.cuda()
+        print("cuding network")
+        if CUDA:
+            net =net.cuda()
         net.detect.use_fast_nms = True
         net.detect.use_cross_class_nms = False
         cfg.mask_proto_debug = False
