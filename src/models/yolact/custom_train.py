@@ -166,7 +166,7 @@ def train():
     yolact_net.init_weights(backbone_path=args.save_folder + cfg.backbone.path)
 
     if args.optimizer == "adam":
-        optimizer = optim.Adam(net.parameters(), lr = args.lr, )
+        optimizer = optim.Adam(net.parameters(), lr = args.lr)
     elif args.optimizer == "sgd":
         optimizer = optim.SGD(net.parameters(), lr=args.lr, momentum=args.momentum,
                               weight_decay=args.decay)

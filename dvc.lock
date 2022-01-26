@@ -19,14 +19,14 @@ stages:
       size: 27222494
       nfiles: 1147
     - path: src/models/yolact/custom_train.py
-      md5: 758f469579bb2ccbfd9845cb02aee5c0
-      size: 16828
+      md5: a7c1923142e0e203b3930e43509dc598
+      size: 16826
     - path: src/models/yolact/data/config.py
       md5: 59dc0d66771506b249770ee9b28a948d
       size: 33551
     outs:
     - path: models/yolact/best_model.pth
-      md5: 5a63eba8d58778f407922ecc6ae447cc
+      md5: 507f5d08f7ff43eaa0223af91c06061a
       size: 123330173
   train_yolact53:
     cmd: python src/models/yolact/custom_train.py --config=yolact_darknet53_config
@@ -39,8 +39,8 @@ stages:
       md5: d0246f701303b104cb31ffbf2e09c2d6
       size: 3937280
     - path: src/models/yolact/custom_train.py
-      md5: 758f469579bb2ccbfd9845cb02aee5c0
-      size: 16828
+      md5: a7c1923142e0e203b3930e43509dc598
+      size: 16826
     - path: src/models/yolact/data/config.py
       md5: 59dc0d66771506b249770ee9b28a948d
       size: 33551
@@ -64,12 +64,32 @@ stages:
       size: 27222494
       nfiles: 1147
     - path: src/models/yolact/custom_train.py
-      md5: 758f469579bb2ccbfd9845cb02aee5c0
-      size: 16828
+      md5: a7c1923142e0e203b3930e43509dc598
+      size: 16826
     - path: src/models/yolact/data/config.py
       md5: 59dc0d66771506b249770ee9b28a948d
       size: 33551
     outs:
     - path: models/yolact/best_model_overfit.pth
       md5: ab47e9ee4dd608235f6c463b619a08a4
+      size: 123330173
+  train_yolact_adam:
+    cmd: python src/models/yolact/custom_train.py --config=yolact_resnet50_config
+      --optimizer=adam --batch_size=3 --best_model=best_model_adam.pth
+    deps:
+    - path: data/TrashCan/instances_train_trashcan.json
+      md5: 9961b3b9982d913319322ae85b1f4ae6
+      size: 22598259
+    - path: data/TrashCan/instances_val_trashcan_splt.json
+      md5: d0246f701303b104cb31ffbf2e09c2d6
+      size: 3937280
+    - path: src/models/yolact/custom_train.py
+      md5: a7c1923142e0e203b3930e43509dc598
+      size: 16826
+    - path: src/models/yolact/data/config.py
+      md5: 59dc0d66771506b249770ee9b28a948d
+      size: 33551
+    outs:
+    - path: models/yolact/best_model_adam.pth
+      md5: 66df83aa854dcf63e043f398d9a7b4b0
       size: 123330173
