@@ -16,3 +16,5 @@ torch_lr_finder==0.2.1
 torchvision==0.11.1
 uvicorn
 python-multipart
+dvc
+dvc[drive]
